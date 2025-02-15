@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class StockController extends Controller
 {
@@ -11,10 +12,21 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        //クエリーパパラメータで受け取った値を取得する。
-        $query = $request->query('q');
-        var_dump($query);
-        die;
+        //クエリーパラメータで受け取った値を取得する。
+        $symbol = $request->query('q');
+
+        $url = "https://yahoo-finance15.p.rapidapi.com/api/v1/markets/search";
+
+        $response = Http::withHeaders([
+            'X-RapidAPI-Host' => 'yahoo-finance15.p.rapidapi.com',
+            'X-RapidAPI-Key' => env("YF_API_KEY")
+        ])->get($url, [
+            "search" => $symbol
+        ]);
+
+        $data = $response->json();
+
+        dd($data);
     }
 
     /**
