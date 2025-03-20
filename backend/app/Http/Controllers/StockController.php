@@ -25,8 +25,7 @@ class StockController extends Controller
         ]);
 
         $data = $response->json();
-
-        dd($data);
+        return $data;
     }
 
     /**

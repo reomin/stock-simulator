@@ -10,9 +10,10 @@ const useStockSearch = () => {
     const searchStocks = async () => {
         setLoading(true);
         const res = await api.get(`/stocks?q=${query}`);
-        const data = res.data;
-        console.log(data);
-        setResults(data.quotes || []);
+        const jsonData = res.data;
+
+        console.log(jsonData.body);
+        setResults(jsonData.body || []);
         setLoading(false);
     }
 
